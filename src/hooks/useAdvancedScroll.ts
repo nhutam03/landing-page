@@ -2,10 +2,14 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import type { SectionId, UseScrollReturn, UseActiveSectionReturn } from '@/types/advanced'
 
 export function useAdvancedScroll(threshold = 50): UseScrollReturn {
-  const [state, setState] = useState({
+  const [state, setState] = useState<{
+    isScrolled: boolean,
+    scrollY: number,
+    direction: 'idle' | 'down' | 'up'
+  }>({
     isScrolled: false,
     scrollY: 0,
-    direction: 'idle' as const
+    direction: 'idle'
   })
   
   const lastScrollY = useRef(0)
@@ -41,7 +45,7 @@ export function useAdvancedActiveSection(
 
   const updateActiveSection = useCallback(() => {
     const scrollPosition = window.scrollY + offset
-    const windowHeight = window.innerHeight
+    //const windowHeight = window.innerHeight
     const newProgress = {} as Record<SectionId, number>
 
     for (const sectionId of sections) {

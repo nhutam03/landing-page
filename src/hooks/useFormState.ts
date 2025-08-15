@@ -3,8 +3,8 @@ import type { FormState, FormErrors } from '@/types/advanced'
 
 type ValidationRule<T> = (value: T) => string | null
 type ValidationRules<T> = Partial<Record<keyof T, ValidationRule<T[keyof T]>>>
-
-export function useFormState<T extends Record<string, any>>(
+type Primitive = string | number | boolean | null | undefined;
+export function useFormState<T extends Record<string, Primitive>>(
   initialValues: T,
   validationRules?: ValidationRules<T>
 ) {
@@ -29,10 +29,10 @@ export function useFormState<T extends Record<string, any>>(
     const errors: FormErrors<T> = {}
     let isValid = true
 
-    for (const [key, value] of Object.entries(state.values)) {
-      const error = validateField(key as keyof T, value)
+    for (const [key, value] of Object.entries(state.values) as [keyof T, T[keyof T]][]) {
+      const error = validateField(key, value)
       if (error) {
-        errors[key as keyof T] = error
+        errors[key] = error
         isValid = false
       }
     }
