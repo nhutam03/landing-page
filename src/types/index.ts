@@ -1,10 +1,12 @@
+import { LucideIcon } from 'lucide-react'
+
 export interface NavItem {
   name: string
   href: string
 }
 
 export interface Feature {
-  icon: string
+  icon: LucideIcon
   title: string
   description: string
   gradient: string

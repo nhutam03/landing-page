@@ -60,8 +60,8 @@ export default function Features() {
               >
             
               <div className="bg-white/80 backdrop-blur-sm p-6 sm:p-8 rounded-xl hover:shadow-2xl hover:bg-white/90 transition-all duration-500 hover:-translate-y-2 h-full border border-white/20 group-hover:border-purple-200">
-                <div className={`w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-r ${feature.gradient} rounded-lg flex items-center justify-center text-xl sm:text-2xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  {feature.icon}
+                <div className={`w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-r ${feature.gradient} rounded-lg flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                  <feature.icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
                   {feature.title}
@@ -81,7 +81,10 @@ export default function Features() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="text-center mt-16"
         >
-          <button className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold text-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl">
+          <button 
+            className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold text-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+            onClick={() => import('@/utils/smoothScroll').then(({ smoothScrollToSection }) => smoothScrollToSection('contact'))}
+          >
             Explore All Features
           </button>
         </motion.div>

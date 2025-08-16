@@ -1,4 +1,12 @@
 import { NavItem, Feature } from '@/types'
+import { 
+  Rocket, 
+  Zap, 
+  Shield, 
+  TrendingUp, 
+  Target, 
+  Wrench 
+} from 'lucide-react'
 
 export const NAV_ITEMS: NavItem[] = [
   { name: 'Home', href: 'hero' },
@@ -9,37 +17,37 @@ export const NAV_ITEMS: NavItem[] = [
 
 export const FEATURES: Feature[] = [
   {
-    icon: "🚀",
+    icon: Rocket,
     title: "Rapid Development",
     description: "Accelerate your development cycle with our proven methodologies and cutting-edge tools.",
     gradient: "from-blue-500 to-blue-600"
   },
   {
-    icon: "⚡",
+    icon: Zap,
     title: "High Performance",
     description: "Optimize your applications for maximum speed and efficiency with our performance-first approach.",
     gradient: "from-purple-500 to-purple-600"
   },
   {
-    icon: "🔒",
+    icon: Shield,
     title: "Enterprise Security",
     description: "Protect your data and users with industry-leading security practices and compliance standards.",
     gradient: "from-green-500 to-green-600"
   },
   {
-    icon: "📈",
+    icon: TrendingUp,
     title: "Scalable Architecture",
     description: "Build systems that grow with your business, from startup to enterprise scale.",
     gradient: "from-orange-500 to-orange-600"
   },
   {
-    icon: "🎯",
+    icon: Target,
     title: "Strategic Consulting",
     description: "Get expert guidance on technology decisions that align with your business objectives.",
     gradient: "from-red-500 to-red-600"
   },
   {
-    icon: "🛠️",
+    icon: Wrench,
     title: "24/7 Support",
     description: "Round-the-clock technical support to ensure your systems run smoothly at all times.",
     gradient: "from-indigo-500 to-indigo-600"

@@ -1,3 +1,5 @@
+import { Bird, BriefcaseBusiness, Camera, Phone } from "lucide-react"
+
 export default function Footer() {
   const currentYear = new Date().getFullYear()
 
@@ -14,17 +16,17 @@ export default function Footer() {
               Build, scale, and succeed with cutting-edge technology.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-purple-600 rounded-lg flex items-center justify-center transition-colors duration-300">
-                🐦
+              <a href="#" className="w-10 h-10 rounded-lg flex items-center justify-center transition-colors duration-300">
+                <Bird/>
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors duration-300">
-                💼
+              <a href="#" className="w-10 h-10 rounded-lg flex items-center justify-center transition-colors duration-300">
+                <BriefcaseBusiness/>
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-pink-600 rounded-lg flex items-center justify-center transition-colors duration-300">
-                📷
+              <a href="#" className="w-10 h-10 rounded-lg flex items-center justify-center transition-colors duration-300">
+                <Camera/>
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-red-600 rounded-lg flex items-center justify-center transition-colors duration-300">
-                📺
+              <a href="#" className="w-10 h-10 rounded-lg flex items-center justify-center transition-colors duration-300">
+                <Phone/>
               </a>
             </div>
           </div>

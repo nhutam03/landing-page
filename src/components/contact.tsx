@@ -4,6 +4,7 @@ import { motion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { CONTACT_INFO } from '@/constants'
 import type { ContactFormData } from '@/types'
+import { Rocket, Target, Lightbulb } from 'lucide-react'
 
 export default function Contact() {
   const ref = useRef(null)
@@ -58,7 +59,7 @@ export default function Contact() {
             <div className="space-y-6">
               <div className="flex items-start space-x-4">
                 <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                  🚀
+                  <Rocket className="w-6 h-6 text-white" />
                 </div>
                 <div>
                   <div className="font-semibold mb-2">Rapid Development</div>
@@ -68,7 +69,7 @@ export default function Contact() {
               
               <div className="flex items-start space-x-4">
                 <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                  🎯
+                  <Target className="w-6 h-6 text-white" />
                 </div>
                 <div>
                   <div className="font-semibold mb-2">Strategic Partnership</div>
@@ -78,7 +79,7 @@ export default function Contact() {
               
               <div className="flex items-start space-x-4">
                 <div className="w-12 h-12 bg-gradient-to-r from-green-600 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                  💡
+                  <Lightbulb className="w-6 h-6 text-white" />
                 </div>
                 <div>
                   <div className="font-semibold mb-2">Innovation First</div>
