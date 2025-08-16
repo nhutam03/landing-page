@@ -42,38 +42,70 @@ export function useAdvancedActiveSection(
 ): UseActiveSectionReturn {
   const [activeSection, setActiveSection] = useState<SectionId>(sections[0])
   const [progress, setProgress] = useState<Record<SectionId, number>>({} as Record<SectionId, number>)
+  
+  // Use refs to avoid dependency changes
+  const sectionsRef = useRef(sections)
+  const offsetRef = useRef(offset)
+  
+  // Update refs when props change
+  useEffect(() => {
+    sectionsRef.current = sections
+    offsetRef.current = offset
+  }, [sections, offset])
 
   const updateActiveSection = useCallback(() => {
-    const scrollPosition = window.scrollY + offset
-    //const windowHeight = window.innerHeight
+    const scrollPosition = window.scrollY + offsetRef.current
     const newProgress = {} as Record<SectionId, number>
+    let newActiveSection: SectionId | null = null
 
-    for (const sectionId of sections) {
+    // Find the active section based on scroll position
+    for (let i = sectionsRef.current.length - 1; i >= 0; i--) {
+      const sectionId = sectionsRef.current[i]
       const element = document.getElementById(sectionId)
       if (element) {
         const { top, height } = element.getBoundingClientRect()
         const absoluteTop = top + window.scrollY
         
-        // Calculate scroll progress for each section
+        // Check if section is in view
+        if (scrollPosition >= absoluteTop) {
+          newActiveSection = sectionId
+          break
+        }
+        
+        // Calculate scroll progress for sections
         if (scrollPosition >= absoluteTop && scrollPosition <= absoluteTop + height) {
           const sectionProgress = Math.min(
             Math.max((scrollPosition - absoluteTop) / height, 0),
             1
           )
           newProgress[sectionId] = sectionProgress
-          setActiveSection(sectionId)
         }
       }
     }
     
-    setProgress(newProgress)
-  }, [sections, offset])
+    // Use first section as fallback
+    if (!newActiveSection) {
+      newActiveSection = sectionsRef.current[0]
+    }
+    
+    setProgress(prev => {
+      // Only update if progress actually changed
+      const hasChanged = Object.keys(newProgress).some(key => 
+        prev[key as SectionId] !== newProgress[key as SectionId]
+      ) || Object.keys(prev).length !== Object.keys(newProgress).length
+      return hasChanged ? newProgress : prev
+    })
+    
+    setActiveSection(prev => prev !== newActiveSection ? newActiveSection : prev)
+  }, []) // Remove dependencies to prevent infinite loops
 
   useEffect(() => {
-    window.addEventListener('scroll', updateActiveSection, { passive: true })
+    const handleScroll = () => updateActiveSection()
+    
+    window.addEventListener('scroll', handleScroll, { passive: true })
     updateActiveSection() // Initial call
     
-    return () => window.removeEventListener('scroll', updateActiveSection)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [updateActiveSection])
 
   const setActiveSectionManually = useCallback((section: SectionId) => {

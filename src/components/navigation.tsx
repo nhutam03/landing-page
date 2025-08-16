@@ -3,20 +3,27 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { NAV_ITEMS } from '@/constants'
-import { useScrolled } from '@/hooks/useScrolled'
-import { useActiveSection } from '@/hooks/useActiveSection'
+import { useAdvancedScroll, useAdvancedActiveSection } from '@/hooks/useAdvancedScroll'
+import { smoothScrollToSection } from '@/utils/smoothScroll'
+import type { SectionId } from '@/types/advanced'
+import { useMemo } from 'react'
 
 export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const isScrolled = useScrolled(50)
-  const activeSection = useActiveSection(['hero', 'about', 'features', 'contact'], 100)
+  const { isScrolled } = useAdvancedScroll(50)
+  
+  // Memoize sections array to prevent recreation on every render
+  const sections = useMemo<readonly SectionId[]>(() => ['hero', 'about', 'features', 'contact'], [])
+  const { activeSection } = useAdvancedActiveSection(sections, 100)
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+  const scrollToSection = async (sectionId: SectionId) => {
+    try {
+      await smoothScrollToSection(sectionId, { duration: 800, offset: 80 })
+      setIsMobileMenuOpen(false)
+    } catch (error) {
+      console.error('Scroll error:', error)
+      setIsMobileMenuOpen(false)
     }
-    setIsMobileMenuOpen(false)
   }
 
   return (
@@ -46,7 +53,7 @@ export default function Navigation() {
             {NAV_ITEMS.map((item) => (
               <button
                 key={item.name}
-                onClick={() => scrollToSection(item.href)}
+                onClick={() => scrollToSection(item.href as SectionId)}
                 className={`font-medium transition-all duration-300 hover:text-purple-400 hover:scale-105 relative px-3 py-2 rounded-lg group ${
                   activeSection === item.href 
                     ? 'text-purple-400' 
@@ -90,7 +97,7 @@ export default function Navigation() {
             {NAV_ITEMS.map((item) => (
               <button
                 key={item.name}
-                onClick={() => scrollToSection(item.href)}
+                onClick={() => scrollToSection(item.href as SectionId)}
                 className={`block w-full text-left px-4 py-2 hover:bg-gray-100 transition-colors duration-300 ${
                   activeSection === item.href ? 'text-purple-600 bg-purple-50' : 'text-gray-700'
                 }`}
