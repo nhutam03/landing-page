@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { Button } from './ui/button'
+import { smoothScrollToSection } from '@/utils/smoothScroll'
 
 export default function Hero() {
   const ref = useRef(null)
@@ -52,12 +53,14 @@ export default function Hero() {
         >
           <Button
             className="cursor-pointer"
+            onClick={() => smoothScrollToSection('contact')}
           >
             Get Started
           </Button>
           <Button
             variant="secondary"
             className="cursor-pointer"
+            onClick={() => smoothScrollToSection('about')}
           >
             Learn more
           </Button>
